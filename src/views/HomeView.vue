@@ -1,5 +1,14 @@
 <script setup>
 import { useApiFetch } from '@/composables/useApiFetch.js'
+import { usePeriodoStore } from '@/stores/periodo.js'
+import { ComboPeriodo as PeriodoSelector } from '@/components/combos'
+import { storeToRefs } from 'pinia'
+// Estado global periodo
+const periodoStore = usePeriodoStore()
+const { periodo } = storeToRefs(periodoStore)
+function actualizarPeriodo(nuevoPeriodo) {
+  periodoStore.setPeriodo(nuevoPeriodo)
+}
 // Verificación de conexión
 const {
   loading: pingLoading,
@@ -83,6 +92,12 @@ function cerrarResultado() {
 
 <template>
   <v-container class="py-8">
+    <v-row class="mb-4">
+      <v-col cols="12" md="4">
+        <PeriodoSelector :model-value="periodo" @update:periodo="actualizarPeriodo" />
+        <div class="mt-2">Periodo seleccionado: <b>{{ periodo || 'No seleccionado' }}</b></div>
+      </v-col>
+    </v-row>
     <v-row class="mb-4">
       <CardOption
         title="Verificar conexión API"

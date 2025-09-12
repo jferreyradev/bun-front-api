@@ -23,5 +23,16 @@ export function useApiFetch() {
     }
   }
 
-  return { loading, error, result, apiFetch }
+  async function execQuery(sql) {
+    await apiFetch('/api/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer demo',
+      },
+      body: JSON.stringify({ query: sql }),
+    })
+  }
+
+  return { loading, error, result, apiFetch, execQuery }
 }

@@ -1,13 +1,30 @@
 <template>
-  <div class="periodo-selector">
-    <label>Periodo (Mes/Año):</label>
-    <select v-model="mes" @change="emitirPeriodo" class="periodo-combo">
-      <option v-for="m in meses" :key="m.value" :value="m.value">{{ m.text }}</option>
-    </select>
-    <select v-model="anio" @change="emitirPeriodo" class="periodo-combo">
-      <option v-for="a in anios" :key="a" :value="a">{{ a }}</option>
-    </select>
-  </div>
+  <v-row class="align-center" dense>
+    <v-col cols="12" md="6">
+      <v-select
+        v-model="mes"
+        :items="meses"
+        item-value="value"
+        item-title="text"
+        label="Mes"
+        dense
+        outlined
+        hide-details
+        class="periodo-combo"
+      />
+    </v-col>
+    <v-col cols="12" md="6">
+      <v-select
+        v-model="anio"
+        :items="anios"
+        label="Año"
+        dense
+        outlined
+        hide-details
+        class="periodo-combo"
+      />
+    </v-col>
+  </v-row>
 </template>
 
 <script setup>
@@ -83,13 +100,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.periodo-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 .periodo-combo {
-  padding: 4px 8px;
-  font-size: 1rem;
+  min-width: 120px;
 }
 </style>

@@ -36,7 +36,7 @@ onMounted(async () => {
   } else if (result.value && result.value.rows) {
     raw = result.value.rows
   }
-  items.value = raw.map(item => {
+  const mapped = raw.map(item => {
     const claves = Object.keys(item)
     const idKey = claves.find(k => k.toLowerCase().includes('id')) || claves[0]
     const nombreKey = claves.find(k => k.toLowerCase().includes('nombre') || k.toLowerCase().includes('desc')) || claves[1] || claves[0]
@@ -45,6 +45,8 @@ onMounted(async () => {
       nombre: item[nombreKey]
     }
   })
+  // Agregar opción 'Todas' al inicio
+  items.value = [{ id: -1, nombre: 'Todas' }, ...mapped]
 })
 
 async function ejecutarConsulta() {

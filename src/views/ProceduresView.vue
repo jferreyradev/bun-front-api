@@ -30,6 +30,7 @@ const procParams = ref('')
 const { loading: procLoading, error: procError, result: procResult, apiFetch } = useApiFetch()
 
 async function llamarProcedimiento() {
+  console.log(procParams.value.split(',').map((p) => p.trim()))
   procResult.value = ''
   try {
     const data = await apiFetch('/procedure', {

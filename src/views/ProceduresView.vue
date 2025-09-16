@@ -4,9 +4,14 @@
     <h2>Procedimientos almacenados</h2>
     <p>Invoca procedimientos almacenados de la base de datos con parámetros.</p>
     <v-container class="py-4">
-      <v-text-field v-model="procName" label="Nombre del procedimiento" class="mb-2" />
-      <v-text-field v-model="procParams" label="Parámetros (separados por coma)" class="mb-2" />
-      <v-btn color="primary" :loading="procLoading" @click="llamarProcedimiento">Ejecutar</v-btn>
+      <v-textarea
+        v-model="procJson"
+        label="JSON de ejecución de procedimiento"
+        class="mb-2"
+        rows="8"
+        auto-grow
+      />
+      <v-btn color="primary" :loading="procLoading" @click="ejecutarJson">Ejecutar JSON</v-btn>
       <OutputJson
         v-if="procResult"
         :json="procResult"
@@ -25,28 +30,25 @@ import OutputJson from '@/components/OutputJson.vue'
 import { ref } from 'vue'
 import { useApiFetch } from '@/composables/useApiFetch.js'
 
-const procName = ref('')
-const procParams = ref('')
+const procJson = ref('')
 const { loading: procLoading, error: procError, result: procResult, apiFetch } = useApiFetch()
 
-async function llamarProcedimiento() {
-  console.log(procParams.value.split(',').map((p) => p.trim()))
+
+async function ejecutarJson() {
   procResult.value = ''
   try {
-    const data = await apiFetch('/procedure', {
+    let parsed = JSON.parse(procJson.value)
+    const data = await apiFetch('/api/procedure', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer demo',
       },
-      body: JSON.stringify({
-        name: procName.value,
-        params: procParams.value.split(',').map((p) => p.trim()),
-      }),
+      body: JSON.stringify(parsed),
     })
     procResult.value = typeof data === 'object' ? JSON.stringify(data) : String(data)
   } catch (e) {
-    procResult.value = 'Error: ' + e.message
+    procResult.value = 'Error: ' + (e?.message || e)
   }
 }
 </script>

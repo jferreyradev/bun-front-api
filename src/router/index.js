@@ -6,6 +6,7 @@ import ReportsView from '../views/ReportsView.vue'
 import ConfigView from '../views/ConfigView.vue'
 import SqlView from '../views/SqlView.vue'
 import ProceduresView from '../views/ProceduresView.vue'
+import IPSSTView from '../views/IPSSTView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       name: 'procedures',
       component: ProceduresView,
     },
+     {
+      path: '/IPSST',
+      name: 'IPSST',
+      component: IPSSTView,
+    }
   ],
 })
 

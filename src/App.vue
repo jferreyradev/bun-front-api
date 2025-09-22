@@ -34,6 +34,7 @@ function formatoPeriodo(p) {
           <v-list-item to="/config" title="Configuración" />
           <v-list-item to="/sql" title="Consultas SQL" />
           <v-list-item to="/procedures" title="Procedimientos" />
+          <v-list-item to="/ipsst" title="IPSST" />
           <v-list-item to="/about" title="Acerca" />
         </v-list>
       </v-menu>

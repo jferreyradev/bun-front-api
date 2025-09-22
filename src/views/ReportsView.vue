@@ -77,6 +77,7 @@ async function consultarReportes(idConsulta) {
   if (idConsulta) consultaSeleccionada.value = idConsulta
   // Ejemplo de consulta dinámica, ajusta según tu modelo de datos
   // Construir la consulta SQL usando los filtros
+  console.log('Valor de periodo:', periodo.value)
   let periodoFiltro = periodo.value ? `to_Date('${periodo.value}','dd/mm/yyyy')` : null
   let tipoFiltro = tipoSeleccionado.value ? tipoSeleccionado.value : null
   let grupoFiltro = grupoSeleccionado.value && grupoSeleccionado.value !== -1 ? grupoSeleccionado.value : null
@@ -99,7 +100,7 @@ async function consultarReportes(idConsulta) {
 
     console.log('Consulta SQL generada:', sql)
   try {
-    const data = await apiFetch('/api/exec', {
+  const data = await apiFetch('/api/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -107,7 +108,8 @@ async function consultarReportes(idConsulta) {
       },
       body: JSON.stringify({ query: sql }),
     })
-    resultados.value = Array.isArray(data) ? data : (data?.rows || [])
+  resultados.value = Array.isArray(data) ? data : (data?.rows || [])
+  console.log('Respuesta de la consulta:', JSON.stringify(resultados.value, null, 2))
     // Generar headers en el orden del SELECT
     if (resultados.value.length > 0 && consulta) {
       // Extraer campos del SELECT

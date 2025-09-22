@@ -28,4 +28,14 @@ order by u.GRUPOREP, u.APELLIDO, u.NOMBRE`,
     colGrupo: 'u.GRUPOREP',
     filtros: ['grupo']
   },
+    pruebaIPSST: {
+    label: 'IPSST',
+    sql: `SELECT c.IDIPSSTCARGA, c.IDTIPOLIQUIDACION,c.IDGRUPO,c.FECHAEMISION,c.IDREP,
+     c.ESTADO,c.PERIODO,c.NROCARGA,c.NROHOJA
+FROM USUARIO.IPSST_CARGA  c
+WHERE 1=1
+  {{PERIODO}}`,
+    colPeriodo: 'c.PERIODO',    
+    filtros: ['periodo'],
+  },
 }

@@ -25,15 +25,6 @@
       :fixed-header="fixedHeader"
       :footer-props="footerProps"
     >
-      <template #header="{ columns }">
-        <thead>
-          <tr>
-            <th v-for="col in columns" :key="col.value" class="header-cell">
-              {{ col.text }}
-            </th>
-          </tr>
-        </thead>
-      </template>
     </v-data-table>
   </div>
 </template>
